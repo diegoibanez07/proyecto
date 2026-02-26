@@ -1,0 +1,477 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NASA Vision | Exploracion Espacial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #060b14;
+      --bg-mid: #0b1629;
+      --panel: #101f35;
+      --panel-soft: #142843;
+      --text: #e8f0ff;
+      --muted: #93a9cf;
+      --accent: #49d1ff;
+      --accent-2: #8ef0ff;
+      --line: rgba(135, 186, 255, 0.24);
+      --danger: #ff6b8a;
+      --success: #7dffb4;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(73, 209, 255, 0.16), transparent 35%),
+        radial-gradient(circle at 80% 25%, rgba(142, 240, 255, 0.1), transparent 30%),
+        linear-gradient(180deg, var(--bg-mid), var(--bg-dark));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .stars,
+    .stars::before,
+    .stars::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 15% 20%, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1.5px 1.5px at 60% 30%, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(1px 1px at 80% 80%, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1.5px 1.5px at 35% 70%, rgba(255, 255, 255, 0.45), transparent);
+      animation: drift 22s linear infinite;
+      z-index: -1;
+    }
+
+    .stars::before {
+      transform: scale(1.1);
+      opacity: 0.55;
+      animation-duration: 34s;
+    }
+
+    .stars::after {
+      transform: scale(0.9);
+      opacity: 0.4;
+      animation-duration: 44s;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-24px); }
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+      background: rgba(6, 11, 20, 0.45);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--accent-2);
+      font-weight: 700;
+      box-shadow: 0 0 0 6px rgba(73, 209, 255, 0.08);
+    }
+
+    .brand-name {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .hero {
+      padding: 76px 0 56px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: var(--accent-2);
+    }
+
+    h1 {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(2.15rem, 4vw, 4rem);
+      line-height: 1.07;
+      max-width: 14ch;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 58ch;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(73, 209, 255, 0.2), rgba(73, 209, 255, 0.06));
+      border-color: rgba(73, 209, 255, 0.42);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(142, 240, 255, 0.8);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(16, 31, 53, 0.75);
+      border: 1px solid var(--line);
+      padding: 14px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-family: "Orbitron", sans-serif;
+      font-size: 1.08rem;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(16, 31, 53, 0.9), rgba(16, 31, 53, 0.45));
+      box-shadow: var(--shadow);
+      min-height: 380px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .live-chip {
+      justify-self: start;
+      background: rgba(255, 107, 138, 0.15);
+      border: 1px solid rgba(255, 107, 138, 0.4);
+      color: #ffc8d6;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .planet {
+      width: min(100%, 280px);
+      aspect-ratio: 1;
+      margin: 8px auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #8ef0ff, #3f7ea6 45%, #1a2f4e 70%),
+        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.22), transparent 35%);
+      box-shadow:
+        inset -30px -30px 50px rgba(0, 0, 0, 0.45),
+        0 0 40px rgba(73, 209, 255, 0.24);
+      position: relative;
+      animation: rotatePlanet 16s linear infinite;
+    }
+
+    .planet::after {
+      content: "";
+      position: absolute;
+      inset: -10px;
+      border: 1px solid rgba(142, 240, 255, 0.3);
+      border-radius: 50%;
+      transform: rotateX(75deg);
+    }
+
+    @keyframes rotatePlanet {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .mission-panel {
+      padding: 60px 0 80px;
+    }
+
+    .section-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(1.45rem, 2vw, 2rem);
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(16, 31, 53, 0.88), rgba(20, 40, 67, 0.5));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(142, 240, 255, 0.55);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      color: var(--success);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 20px 0 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .stats,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 52px;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-badge">N</span>
+        <span class="brand-name">NASA Professional</span>
+      </div>
+      <ul class="nav-links">
+        <li>Misiones</li>
+        <li>Investigacion</li>
+        <li>Noticias</li>
+        <li>Contacto</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="reveal">
+        <span class="eyebrow">Centro de Exploracion</span>
+        <h1>Innovacion Espacial de Nivel Profesional</h1>
+        <p>
+          Plataforma conceptual inspirada en NASA para presentar misiones, ciencia y tecnologia
+          con una interfaz limpia, potente y orientada a impacto visual.
+        </p>
+
+        <div class="cta-row">
+          <button class="btn btn-primary">Ver Misiones Activas</button>
+          <button class="btn">Descargar Informe 2026</button>
+        </div>
+
+        <div class="stats">
+          <article class="stat">
+            <strong>42</strong>
+            <span>Programas orbitales</span>
+          </article>
+          <article class="stat">
+            <strong>18</strong>
+            <span>Laboratorios aliados</span>
+          </article>
+          <article class="stat">
+            <strong>99.98%</strong>
+            <span>Confiabilidad de telemetria</span>
+          </article>
+        </div>
+      </div>
+
+      <aside class="hero-card reveal" style="transition-delay: 0.12s;">
+        <span class="live-chip">Signal Live</span>
+        <h2 class="section-title" style="font-size:1.25rem; margin-bottom:0;">Monitoreo Tierra-Luna</h2>
+        <p class="section-sub" style="margin-bottom:4px;">Estado de vector, propulsion y ventana de transferencia.</p>
+        <div class="planet" aria-hidden="true"></div>
+        <p style="color:var(--muted); font-size:0.92rem;">Sistema nominal. Proxima ventana de insercion orbital: 03:42 UTC.</p>
+      </aside>
+    </section>
+
+    <section class="mission-panel">
+      <h2 class="section-title reveal">Misiones y Uncios Clave</h2>
+      <p class="section-sub reveal" style="transition-delay:0.06s;">Panel informativo con estilo corporativo, pensado para portada institucional.</p>
+
+      <div class="grid">
+        <article class="card reveal" style="transition-delay:0.1s;">
+          <h3>Artemis Logistics</h3>
+          <p>Integracion de modulos y sistemas de soporte para nuevas operaciones de superficie lunar.</p>
+          <span class="tag">En Curso</span>
+        </article>
+        <article class="card reveal" style="transition-delay:0.16s;">
+          <h3>Deep Space Relay</h3>
+          <p>Expansiones en red de comunicaciones de alta latencia para sondas en espacio profundo.</p>
+          <span class="tag">Actualizacion</span>
+        </article>
+        <article class="card reveal" style="transition-delay:0.22s;">
+          <h3>Earth Climate Lab</h3>
+          <p>Analitica satelital avanzada para monitoreo atmosferico y prediccion de eventos extremos.</p>
+          <span class="tag">Prioridad Alta</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">NASA Professional Concept | Diseno moderno para presentacion institucional</div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
